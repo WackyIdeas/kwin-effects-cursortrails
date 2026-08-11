@@ -1,0 +1,6 @@
+File=trails.kcfg
+ClassName=TrailsConfig
+NameSpace=KWin
+Singleton=true
+Mutators=true
+TranslationSystem=kde

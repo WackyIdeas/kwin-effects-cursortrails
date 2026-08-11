@@ -1,0 +1,15 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "WackyIdeas"
+            }
+        ],
+        "Category": "Appearance",
+        "Description": "Displays trailing afterimages of the cursor",
+        "EnabledByDefault": false,
+        "License": "GPL-3.0+",
+        "Name": "Cursor Trails"
+    },
+    "X-KDE-ConfigModule": "kwin_cursortrails_config"
+}
