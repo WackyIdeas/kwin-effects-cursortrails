@@ -108,7 +108,7 @@ public:
 
     bool isActive() const override
     {
-        return true;
+        return m_shader != nullptr;
     }
 
     int requestedEffectChainPosition() const override
