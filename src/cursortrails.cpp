@@ -77,6 +77,9 @@ void ParticleEmitter::init()
     cursorParticle.velocity = QVector2D((0.0), 0.0);
     cursorParticle.color = QVector4D(0.0, 0.0, 0.0, 1.0);
 
+    int VAO_old;
+    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &VAO_old);
+
     unsigned int VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -100,7 +103,7 @@ void ParticleEmitter::init()
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 2 * sizeof(QVector4D), (void*)(sizeof(QVector4D)));
     glVertexAttribDivisor(2, 1);
 
-    glBindVertexArray(0);
+    glBindVertexArray(VAO_old);
 }
 
 void ParticleEmitter::draw(QMatrix4x4 mvp, GLShader *shader, const RenderViewport &viewport, GLTexture* texture)
@@ -143,9 +146,11 @@ void ParticleEmitter::draw(QMatrix4x4 mvp, GLShader *shader, const RenderViewpor
 
     texture->bind();
 
+    int VAO_old;
+    glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &VAO_old);
     glBindVertexArray(VAO);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 6, activeParticles);
-    glBindVertexArray(0);
+    glBindVertexArray(VAO_old);
 
     texture->unbind();
     ShaderManager::instance()->popShader();
