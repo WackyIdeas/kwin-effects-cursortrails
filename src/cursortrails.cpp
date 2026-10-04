@@ -7,6 +7,8 @@
 #include "cursortrails.h"
 #include "trailsconfig.h"
 
+#include "core/rendertarget.h"
+
 #define PI 3.14159
 
 namespace KWin
@@ -106,7 +108,7 @@ void ParticleEmitter::init()
     glBindVertexArray(VAO_old);
 }
 
-void ParticleEmitter::draw(QMatrix4x4 mvp, GLShader *shader, const RenderViewport &viewport, GLTexture* texture)
+void ParticleEmitter::draw(QMatrix4x4 mvp, GLShader *shader, const RenderViewport &viewport, GLTexture* texture, const RenderTarget &renderTarget)
 {
     if(texture == nullptr) return;
     std::vector<QVector4D> instanceData;
@@ -143,6 +145,9 @@ void ParticleEmitter::draw(QMatrix4x4 mvp, GLShader *shader, const RenderViewpor
 
     ShaderManager::instance()->pushShader(shader);
     shader->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mvp);
+    const auto toXYZ = renderTarget.colorDescription()->containerColorimetry().toXYZ();
+    shader->setUniform(GLShader::Vec3Uniform::PrimaryBrightness, QVector3D(toXYZ(1, 0), toXYZ(1, 1), toXYZ(1, 2)));
+    shader->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
 
     texture->bind();
 
@@ -211,7 +216,7 @@ CursorTrailEffect::CursorTrailEffect()
     input()->installInputEventSpy(this);
 
     m_shader = ShaderManager::instance()->generateShaderFromFile(
-        ShaderTrait::MapTexture,
+        ShaderTrait::MapTexture | ShaderTrait::TransformColorspace,
         QStringLiteral(":/effects/cursortrails/shaders/vertex.vert"),
         QStringLiteral(":/effects/cursortrails/shaders/shader.frag")
     );
@@ -276,7 +281,7 @@ void CursorTrailEffect::prePaintScreen(ScreenPrePaintData &data)
 void CursorTrailEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewport &viewport, int mask, const Region &region, LogicalOutput *screen)
 {
     effects->paintScreen(renderTarget, viewport, mask, region, screen);
-    m_emitter->draw(viewport.projectionMatrix(), m_shader.get(), viewport, m_cursorShape.get());
+    m_emitter->draw(viewport.projectionMatrix(), m_shader.get(), viewport, m_cursorShape.get(), renderTarget);
 }
 
 void CursorTrailEffect::postPaintScreen()

@@ -1,4 +1,5 @@
 #version 140
+#include "kwin-effects-cursortrails/brightnessadjust.frag"
 
 in vec2 uv;
 in vec4 particlecolor;
@@ -11,5 +12,5 @@ void main()
 {
     vec4 texCol = texture(sampler, uv);
     texCol.a *= particlecolor.a;
-    fragColor = texCol;
+    fragColor = adjustBrightness(texCol);
 }

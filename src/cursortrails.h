@@ -46,7 +46,7 @@ class ParticleEmitter
 public:
     ParticleEmitter(unsigned int amount);
     void update(unsigned int newParticles, QVector2D offset, bool spawnNew);
-    void draw(QMatrix4x4 mvp, GLShader* shader, const RenderViewport &view, GLTexture* texture);
+    void draw(QMatrix4x4 mvp, GLShader* shader, const RenderViewport &view, GLTexture* texture, const RenderTarget &renderTarget);
     unsigned int activeParticleCount() const;
     void updateDelta();
 
