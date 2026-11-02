@@ -3,6 +3,7 @@
 This effect introduces the cursor trail effect from Windows, with the addition of the trails fading out of view. They can be configured in both duration and frequency.
 
 Tested on KDE Plasma 6.8.2 CachyOS
+Ideally should work on any desktop environment that uses kwin version 6.8.2
 
 ![regular](screenshots/regular.gif)
 
