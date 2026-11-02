@@ -2,7 +2,7 @@
 
 This effect introduces the cursor trail effect from Windows, with the addition of the trails fading out of view. They can be configured in both duration and frequency.
 
-Tested on KDE Plasma 6.7.4 (Wayland), Qt 6.11.1.
+Tested on KDE Plasma 6.8.2 CachyOS
 
 ![regular](screenshots/regular.gif)
 
@@ -22,3 +22,4 @@ $ cmake -DCMAKE_INSTALL_PREFIX=/usr -G Ninja -B build . # '-G Ninja' is optional
 $ cmake --build build
 $ sudo cmake --install build
 ```
+easiest way to install is to set install.sh as executable and execute it from terminal.
