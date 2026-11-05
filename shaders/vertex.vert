@@ -1,5 +1,3 @@
-#version 140
-#extension GL_ARB_explicit_attrib_location : enable
 layout(location = 0) in vec4 vertex;
 layout(location = 1) in vec4 instancePosAndSize;
 layout(location = 2) in vec4 instanceColor;

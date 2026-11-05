@@ -1,4 +1,3 @@
-#version 140
 #include "kwin-effects-cursortrails/brightnessadjust.frag"
 
 in vec2 uv;

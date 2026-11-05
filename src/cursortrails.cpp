@@ -278,10 +278,11 @@ void CursorTrailEffect::prePaintScreen(ScreenPrePaintData &data)
     effects->prePaintScreen(data);
 }
 
-void CursorTrailEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewport &viewport, int mask, const Region &region, LogicalOutput *screen)
+bool CursorTrailEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewport &viewport, int mask, const Region &region, LogicalOutput *screen)
 {
     effects->paintScreen(renderTarget, viewport, mask, region, screen);
     m_emitter->draw(viewport.projectionMatrix(), m_shader.get(), viewport, m_cursorShape.get(), renderTarget);
+    return true;
 }
 
 void CursorTrailEffect::postPaintScreen()
